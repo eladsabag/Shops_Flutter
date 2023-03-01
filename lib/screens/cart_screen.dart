@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show Cart;
 import '../widgets/cart_item.dart';
+import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = "/cart";
@@ -36,16 +37,19 @@ class CartScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Chip(
                         label: Text(
-                            '\$${cart.totalAmount}',
+                            '\$${cart.totalAmount.toStringAsFixed(2)}',
                             style: TextStyle(
                               color: Theme.of(context).primaryTextTheme.headline6?.color,
                             ),
                         ),
-                        backgroundColor: Theme.of(context).primaryColor,
+                        backgroundColor: Colors.purple,
                     ),
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Provider.of<Orders>(context, listen: false).addOrder(cart.items.values.toList(), cart.totalAmount);
+                        cart.clear();
+                      },
                       child: Text(
                           'Order Now',
                           style: TextStyle(
@@ -62,6 +66,7 @@ class CartScreen extends StatelessWidget {
               child: ListView.builder(
                   itemBuilder: (ctx, i) => CartItem(
                       id: cart.items.values.toList()[i].id,
+                      productId: cart.items.keys.toList()[i],
                       price: cart.items.values.toList()[i].price,
                       quantity: cart.items.values.toList()[i].quantity,
                       title: cart.items.values.toList()[i].title
