@@ -133,7 +133,7 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).signIn(
+        await Provider.of<Auth>(context, listen: false).login(
             _authData['email']!,
             _authData['password']!
         );
@@ -252,7 +252,8 @@ class _AuthCardState extends State<AuthCard> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
-                      ), backgroundColor: Colors.purple,
+                      ),
+                      onPrimary: Colors.white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30.0, vertical: 8.0),
                       // primary: Theme.of(context).primaryTextTheme.button.color,
@@ -263,7 +264,7 @@ class _AuthCardState extends State<AuthCard> {
                 TextButton(
                   onPressed: _switchAuthMode,
                   style: TextButton.styleFrom(
-                    foregroundColor: Colors.purple, padding: const EdgeInsets.symmetric(
+                     padding: const EdgeInsets.symmetric(
                         horizontal: 30.0, vertical: 4),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
